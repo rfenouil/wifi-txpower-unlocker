@@ -24,7 +24,7 @@ apt-get -y update && apt-get -y upgrade
 
 # Install dependencies
 echo "Installing dependencies..." 1>&2
-apt-get -y install git python m2crypto libgcrypt* libnl* pkg-config build-essential python-dev python-pip curl
+apt-get -y install git python m2crypto pkg-config build-essential python-dev python-pip curl
 pip install setuptools future
 
 echo "Fetching crda and wireless-regdb..." 1>&2
@@ -44,7 +44,10 @@ make -C wireless-regdb/
 
 # Backup old regulatory.bin and copy the newly compiled file into /lib/crda/
 echo "Backing up old regulatory.bin and copying the newly compiled file into /lib/crda/ ..." 1>&2
-cp /lib/crda/regulatory.bin /lib/crda/regulatory.bin.old
+mkdir -p /lib/crda/pubkeys
+if [[ -f /lib/crda/regulatory.bin ]] && [[ ! -f /lib/crda/regulatory.bin.old ]]; then
+	cp /lib/crda/regulatory.bin /lib/crda/regulatory.bin.old
+fi
 cp wireless-regdb/regulatory.bin /lib/crda/
 
 # Newly compiled regulatory.bin was signed by the current user, copy this key into crda
