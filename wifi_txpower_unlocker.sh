@@ -36,7 +36,7 @@ git clone git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.
 
 # Change region 'BO's TXpower in db.txt
 echo "Setting the desired TX power for 'country 00' in wireless-regdb/db.txt ..." 1>&2
-gawk -i inplace -v INPLACE_SUFFIX=.bak -F"[ ]" '$1~"country"{if($2~"00:") countryOK=1; else countryOK=0;} ( countryOK==1 && $6~/^\(/ ){ sub(/[0-9]+/, "33", $6);} {}1' wireless-regdb/db.txt
+gawk -i inplace -v INPLACE_SUFFIX=.bak -F"[ ]" "\$1~\"country\"{if(\$2~\"00:\") countryOK=1; else countryOK=0;} ( countryOK==1 && \$6~/^\(/ ){ sub(/[0-9]+/, \"$txpower\", \$6);} {}1" wireless-regdb/db.txt
 
 # Compile wireless-regdb (regulatory.bin)
 echo "Compiling wireless-regdb (regulatory.bin)..." 1>&2
