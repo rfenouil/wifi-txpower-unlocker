@@ -29,9 +29,11 @@ pip install setuptools future
 
 echo "Fetching crda and wireless-regdb..." 1>&2
 # Clone crda
+rm -rf crda
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/crda.git
 
 # Clone wireless-regdb
+rm -rf wireless-regdb
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git
 
 # Change region 'BO's TXpower in db.txt
